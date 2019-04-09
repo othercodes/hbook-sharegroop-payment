@@ -1,0 +1,167 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2018-12-10 13:41+0100\n"
+"PO-Revision-Date: 2018-12-06 11:50+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.1.1\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: esc_html__;__;esc_html_e\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: .\n"
+"X-Poedit-SearchPath-2: etransactions.php\n"
+"X-Poedit-SearchPath-3: etransactions-hbook.php\n"
+
+#: etransactions-hbook.php:39
+msgid "E-Transactions plugin requires HBook plugin to work properly."
+msgstr ""
+
+#: etransactions.php:11
+msgid "E-Transactions"
+msgstr ""
+
+#: etransactions.php:14
+msgid "Credit Agricole Logo"
+msgstr ""
+
+#: etransactions.php:15
+msgid "CB"
+msgstr ""
+
+#: etransactions.php:16
+msgid "Visa"
+msgstr ""
+
+#: etransactions.php:17
+msgid "Mastercard"
+msgstr ""
+
+#: etransactions.php:18
+msgid "E-Carte Bleue"
+msgstr ""
+
+#: etransactions.php:19
+msgid "Discover"
+msgstr ""
+
+#: etransactions.php:20
+msgid "American Express"
+msgstr ""
+
+#: etransactions.php:21
+msgid "Diners"
+msgstr ""
+
+#: etransactions.php:22
+msgid "JCB"
+msgstr ""
+
+#: etransactions.php:23
+msgid "Cofinoga"
+msgstr ""
+
+#: etransactions.php:24
+msgid "Aurore"
+msgstr ""
+
+#: etransactions.php:43
+msgid "E-Transactions payment"
+msgstr ""
+
+#: etransactions.php:45
+msgid "Payment method label"
+msgstr ""
+
+#: etransactions.php:46
+msgid "Payment method description"
+msgstr ""
+
+#: etransactions.php:47
+msgid "Bottom text line 1: "
+msgstr ""
+
+#: etransactions.php:48
+msgid "Bottom text line 2: "
+msgstr ""
+
+#: etransactions.php:55
+msgid "E-Transactions, pay with your favorite method"
+msgstr ""
+
+#: etransactions.php:56
+msgid ""
+"We will redirect you to the E-Transactions banking platform where you can "
+"pay with your favorite method."
+msgstr ""
+
+#: etransactions.php:57
+msgid "Powered by "
+msgstr ""
+
+#: etransactions.php:58
+msgid "We accept all major credit cards"
+msgstr ""
+
+#: etransactions.php:84
+msgid "E-Transactions settings"
+msgstr ""
+
+#: etransactions.php:87
+msgid "E-Transactions mode:"
+msgstr ""
+
+#: etransactions.php:90
+msgid "Live"
+msgstr ""
+
+#: etransactions.php:91
+msgid "Test"
+msgstr ""
+
+#: etransactions.php:96
+msgid "Merchant Site Number:"
+msgstr ""
+
+#: etransactions.php:100
+msgid "Merchant Rang Number:"
+msgstr ""
+
+#: etransactions.php:104
+msgid "Merchant E-Transactions Id:"
+msgstr ""
+
+#: etransactions.php:108
+msgid "HMAC Key Live:"
+msgstr ""
+
+#: etransactions.php:113
+msgid "HMAC Key Test:"
+msgstr ""
+
+#: etransactions.php:118
+msgid "Displayed icons:"
+msgstr ""
+
+#: etransactions.php:253
+msgid "Error : no server could be found"
+msgstr ""
+
+#: etransactions.php:344
+msgid ""
+"You have chosen a payment method that needs further confirmation of payment."
+msgstr ""
+
+#: etransactions.php:351
+#, php-format
+msgid ""
+"No charge has been done as an error occured on Credit Agricole with your "
+"payment. Please try again and if the problem occurs again, contact us with "
+"this error code: %s. We will do our best to assist you with your reservation."
+msgstr ""

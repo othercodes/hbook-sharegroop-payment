@@ -1,0 +1,178 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2018-12-10 13:41+0100\n"
+"PO-Revision-Date: 2018-12-10 13:42+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.1.1\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-KeywordsList: esc_html__;__;esc_html_e\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: .\n"
+"X-Poedit-SearchPath-2: etransactions.php\n"
+"X-Poedit-SearchPath-3: etransactions-hbook.php\n"
+
+#: etransactions-hbook.php:39
+msgid "E-Transactions plugin requires HBook plugin to work properly."
+msgstr ""
+"Le plugin E-Transactions nécessite le plugin HBook pour fonctionner "
+"correctement."
+
+#: etransactions.php:11
+msgid "E-Transactions"
+msgstr "E-Transactions"
+
+#: etransactions.php:14
+msgid "Credit Agricole Logo"
+msgstr "Logo du Crédit Agricole"
+
+#: etransactions.php:15
+msgid "CB"
+msgstr "CB"
+
+#: etransactions.php:16
+msgid "Visa"
+msgstr "Visa"
+
+#: etransactions.php:17
+msgid "Mastercard"
+msgstr "Mastercard"
+
+#: etransactions.php:18
+msgid "E-Carte Bleue"
+msgstr "Carte bleue Éléctronique (E-Carte Bleue)"
+
+#: etransactions.php:19
+msgid "Discover"
+msgstr "Discover"
+
+#: etransactions.php:20
+msgid "American Express"
+msgstr "American Express"
+
+#: etransactions.php:21
+msgid "Diners"
+msgstr "Diners"
+
+#: etransactions.php:22
+msgid "JCB"
+msgstr "JCB"
+
+#: etransactions.php:23
+msgid "Cofinoga"
+msgstr "Cofinoga"
+
+#: etransactions.php:24
+msgid "Aurore"
+msgstr "Aurore"
+
+#: etransactions.php:43
+msgid "E-Transactions payment"
+msgstr "Payment E-Transactions"
+
+#: etransactions.php:45
+msgid "Payment method label"
+msgstr "Label de la méthode de paiement"
+
+#: etransactions.php:46
+msgid "Payment method description"
+msgstr "Description de la méthode de paiement"
+
+#: etransactions.php:47
+msgid "Bottom text line 1: "
+msgstr "Texte du dessous ligne 1:"
+
+#: etransactions.php:48
+msgid "Bottom text line 2: "
+msgstr "Texte du dessous ligne 2:"
+
+#: etransactions.php:55
+msgid "E-Transactions, pay with your favorite method"
+msgstr "E-Transactions, payez avec votre méthode préférée"
+
+#: etransactions.php:56
+msgid ""
+"We will redirect you to the E-Transactions banking platform where you can "
+"pay with your favorite method."
+msgstr ""
+"Vous allez être redirigés vers la plateforme bancaire E-Transactions pour "
+"finaliser le paiement."
+
+#: etransactions.php:57
+msgid "Powered by "
+msgstr ""
+"E-Transactions, la solution de paiement sur internet du Crédit Agricole"
+
+#: etransactions.php:58
+msgid "We accept all major credit cards"
+msgstr "Nous acceptons les cartes suivantes: "
+
+#: etransactions.php:84
+msgid "E-Transactions settings"
+msgstr "Paramètres E-Transactions"
+
+#: etransactions.php:87
+msgid "E-Transactions mode:"
+msgstr "Environnement E-Transactions:"
+
+#: etransactions.php:90
+msgid "Live"
+msgstr "Production"
+
+#: etransactions.php:91
+msgid "Test"
+msgstr "Pré-production"
+
+#: etransactions.php:96
+msgid "Merchant Site Number:"
+msgstr "Numéro de site marchand:"
+
+#: etransactions.php:100
+msgid "Merchant Rang Number:"
+msgstr "Numéro de Rang:"
+
+#: etransactions.php:104
+msgid "Merchant E-Transactions Id:"
+msgstr "Numéro d'identifiant E-Transactions:"
+
+#: etransactions.php:108
+msgid "HMAC Key Live:"
+msgstr "Clé Production HMAC:"
+
+#: etransactions.php:113
+msgid "HMAC Key Test:"
+msgstr "Clé Pré-production HMAC:"
+
+#: etransactions.php:118
+msgid "Displayed icons:"
+msgstr "Logos affichés:"
+
+#: etransactions.php:253
+msgid "Error : no server could be found"
+msgstr "Erreur: aucun serveur n'a pu être trouvé"
+
+#: etransactions.php:344
+msgid ""
+"You have chosen a payment method that needs further confirmation of payment."
+msgstr ""
+"Vous avez choisi une méthode de paiement qui nécessite confirmation. Merci "
+"de contacter l'hôtel."
+
+#: etransactions.php:351
+#, php-format
+msgid ""
+"No charge has been done as an error occured on Credit Agricole with your "
+"payment. Please try again and if the problem occurs again, contact us with "
+"this error code: %s. We will do our best to assist you with your reservation."
+msgstr ""
+"Aucun débit effectué car une erreur est survenue avec votre paiement sur la "
+"plateforme du Crédit Agricole. Merci d'essayer à nouveau et si le problème "
+"persiste, veuillez nous contacter avec le code erreur suivant: %s. Nous "
+"ferons tout notre possible pour vous assister au mieux avec votre "
+"réservation."

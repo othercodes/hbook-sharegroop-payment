@@ -1,17 +1,17 @@
-jQuery( document ).ready( function( $ ) {
-	etransactions_data_live();
+jQuery(document).ready(function ($) {
+    sharegroop_data_live();
 
-	function etransactions_data_live() {
-		if ( $( 'input[name="hb_etransactions_mode"]:checked' ).val() == 'live' ) {
-			$( '.hb-etransactions-mode-live' ).slideDown();
-			$( '.hb-etransactions-mode-test' ).slideUp();
-		} else {
-			$( '.hb-etransactions-mode-live' ).slideUp();
-			$( '.hb-etransactions-mode-test' ).slideDown();
-		}
-	}
+    function sharegroop_data_live() {
+        if ($('input[name="hb_sharegroop_mode"]:checked').val() == 'live') {
+            $('.hb-sharegroop-mode-live').slideDown();
+            $('.hb-sharegroop-mode-test').slideUp();
+        } else {
+            $('.hb-sharegroop-mode-live').slideUp();
+            $('.hb-sharegroop-mode-test').slideDown();
+        }
+    }
 
-	$( 'input[name="hb_etransactions_mode"]' ).change( function() {
-		etransactions_data_live();
-	});
+    $('input[name="hb_sharegroop_mode"]').change(function () {
+        sharegroop_data_live();
+    });
 });
