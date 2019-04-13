@@ -155,6 +155,26 @@ class HbSharegroop extends HbPaymentGateway
     }
 
     /**
+     * Insert payment strings into database.
+     * @return void
+     */
+    public function insert_plugin_strings()
+    {
+        global $wpdb;
+
+        foreach ($this->get_strings_value() as $string_id => $string_value) {
+            if (!$this->hbdb->get_string($string_id)) {
+                $wpdb->query("INSERT INTO {$this->hbdb->strings_table} (id, locale, value) 
+                                    VALUES ('$string_id', 'en_US', '$string_value')");
+            } else {
+                $wpdb->query("UPDATE {$this->hbdb->strings_table} 
+                                    SET `value` = '$string_value'
+                                    WHERE id = '$string_id'");
+            }
+        }
+    }
+
+    /**
      * Display the payment method label.
      * @return mixed|string|void
      */
