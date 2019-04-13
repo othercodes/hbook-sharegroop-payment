@@ -8,6 +8,30 @@
 class HbSharegroop extends HbPaymentGateway
 {
     /**
+     * Plugin ID
+     * @var string
+     */
+    public $id = 'sharegroop';
+
+    /**
+     * Plugin version string
+     * @var string
+     */
+    public $version = '1.0.0';
+
+    /**
+     * Plugin name
+     * @var string
+     */
+    public $name = 'ShareGroop';
+
+    /**
+     * This plugin redirects to another site?
+     * @var string
+     */
+    public $has_redirection = 'no';
+
+    /**
      * Lis of available payment methods
      * @var array
      */
@@ -22,12 +46,7 @@ class HbSharegroop extends HbPaymentGateway
     {
         $this->hbdb = $hbookdb;
         $this->utils = $utils;
-
-        $this->id = 'sharegroop';
-        $this->version = '1.0.0';
-        $this->name = esc_html__('ShareGroop', 'hb-sharegroop-admin');;
-        $this->has_redirection = 'no';
-
+        $this->name = esc_html__('ShareGroop', 'hb-sharegroop-admin');
         $this->payment_methods = [
             'visa' => esc_html__('Visa', 'hb-etransactions-admin'),
             'mastercard' => esc_html__('Mastercard', 'hb-etransactions-admin'),
@@ -50,6 +69,19 @@ class HbSharegroop extends HbPaymentGateway
 
         add_filter('hbook_payment_gateways', [$this, 'add_sharegroop_gateway_class']);
         add_filter('hb_strings', [$this, 'add_plugin_strings']);
+
+        /**
+         * Register all "hb_sharegroop_ajax_" functions as ajax action
+         * in wordpress dynamically.
+         */
+        array_map(function ($function) {
+            if (strpos($function, 'hb_sharegroop_ajax_') === 0) {
+                add_action('wp_ajax_' . $function, [$this, $function]);
+                add_action('wp_ajax_nopriv_' . $function, [$this, $function]);
+            }
+
+            return $function;
+        }, get_class_methods(get_class($this)));
     }
 
     /**
@@ -87,6 +119,10 @@ class HbSharegroop extends HbPaymentGateway
                     'Text at the bottom of the form - line 1: ',
                     'hb-sharegroop-admin'
                 ),
+                'sharegroop_wait_confirmation_msg' => esc_html__(
+                    'Wait confirmation message',
+                    'hb-sharegroop-admin'
+                )
             ]
         ];
     }
@@ -111,6 +147,10 @@ class HbSharegroop extends HbPaymentGateway
                 'We accept all major credit cards',
                 'hb-sharegroop-admin'
             ),
+            'sharegroop_wait_confirmation_msg' => esc_html__(
+                'Waiting Sharegroop confirmation...',
+                'hb-sharegroop-admin'
+            )
         ];
     }
 
@@ -198,13 +238,43 @@ class HbSharegroop extends HbPaymentGateway
     }
 
     /**
-     * Return the
+     * Load the front end js scripts
+     * @return array
+     */
+    public function js_scripts()
+    {
+        return [
+            [
+                'id' => 'hbook-sharegroop',
+                'url' => plugin_dir_url(__FILE__) . 'js/sharegroop.js',
+                'version' => $this->version
+            ],
+        ];
+    }
+
+    /**
+     * Return js variables
      * @return array
      */
     public function js_data()
     {
+        $accomodations = [];
+        foreach ($this->hbdb->get_all_accom() as $accom_id => $accom_name) {
+            $accomodations[] = [
+                'id' => $accom_id,
+                'name' => $accom_name,
+            ];
+        }
+
         return [
-            'hb_sharegroop_url' => 'some-url',
+            "hb_sharegroop_public_key" => $this->get_public_key(),
+            "hb_sharegroop_locale" => function_exists('pll_current_language')
+                ? pll_current_language()
+                : substr(get_option('WPLANG'), 0, 2),
+            "hb_sharegroop_currency" => get_option('hb_currency'),
+            "hb_sharegroop_mode" => get_option('hb_sharegroop_mode'),
+            "hb_sharegroop_wait_msg" => $this->hbdb->get_string('sharegroop_wait_confirmation_msg'),
+            "hb_sharegroop_accomodations" => json_encode($accomodations),
         ];
     }
 
@@ -214,16 +284,8 @@ class HbSharegroop extends HbPaymentGateway
      */
     public function payment_form()
     {
-        $config = [
-            "selector" => "#sharegroop-captain",
-            "publicKey" => $this->get_public_key(),
-            "locale" => "en",
-            "currency" => "EUR",
-        ];
-
         $output = '<div id="sharegroop-captain"></div>';
         $output .= '<script src="' . $this->get_url() . '"></script>';
-        $output .= '<script>ShareGroop.initCaptain(' . json_encode($config) . ').mount();</script>';
 
         $payment_desc = $this->hbdb->get_string('sharegroop_payment_method_description');
         if ($payment_desc) {
@@ -256,83 +318,36 @@ class HbSharegroop extends HbPaymentGateway
      **************************************************************/
 
     /**
-     * Get the payment token
-     * @return bool|string
+     * Process the required payment
+     * @param $reservation
+     * @param $customer
+     * @param $amount
+     * @return mixed
      */
-    public function get_payment_token()
+    public function process_payment($reservation, $customer, $amount)
     {
-        return trim($_GET['token']);
-    }
+        if (empty($_POST['hb_sharegroup_order_id'])) {
+            return 'E1001: Unable to process payment, please contact administrator.';
+        }
 
-    public function process_payment($resa_info, $customer_info, $amount_to_pay)
-    {
-        $parameters_to_remove = array('token');
-        $return_urls = $this->get_return_urls($parameters_to_remove);
-        $token = substr(bin2hex(openssl_random_pseudo_bytes(64)), -20);
-        $data_sharegroop = $this->data_for_sharegroop($amount_to_pay, $return_urls, $token, $resa_info, $customer_info);
+        if (empty($_POST['hb_sharegroup_amount_paid'])) {
+            return 'E1002: Unable to process payment, please contact administrator.';
+        }
 
-        return array(
+        $orderRegex = '/ord_[0-9a-f]{8}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{12}/';
+        if (preg_match($orderRegex, $_POST['hb_sharegroup_order_id']) !== 1) {
+            return 'E1003: Invalid Order ID, please contact administrator.';
+        }
+
+        $orderId = filter_input(INPUT_POST, 'hb_sharegroup_order_id', FILTER_SANITIZE_STRING);
+        $paid = filter_input(INPUT_POST, 'hb_sharegroup_amount_paid', FILTER_VALIDATE_INT);
+
+        return [
             'success' => true,
-            'payment_token' => $token,
-            'return_url' => $return_urls['payment_confirm'],
-            'data_sharegroop' => $data_sharegroop
-        );
-    }
-
-    public function confirm_payment()
-    {
-        $resa = $this->hbdb->get_resa_by_payment_token($_GET['token']);
-        if (!$resa) {
-            $response = array(
-                'success' => false,
-                'error_msg' => $this->hbdb->get_string('timeout_error')
-            );
-        } else {
-            $status = '';
-            $error_msg = '';
-
-            if (isset ($_GET['Result'])) {
-                $status = $_GET['Result'];
-
-            }
-            switch ($status) {
-                case '00000' :
-                    $response = array(
-                        'success' => true,
-                    );
-                    break;
-
-                case '99999' :
-                    $response = array(
-                        'success' => true,
-                        'payment_status' => 'Pending',
-                        'payment_status_reason' => esc_html__('You have chosen a payment method that needs further confirmation of payment.')
-                    );
-                    break;
-
-                default :
-                    $response = array(
-                        'success' => false,
-                        'error_msg' => sprintf(esc_html__('No charge has been done as an error occured on Credit Agricole with your payment. Please try again and if the problem occurs again, contact us with this error code: %s. We will do our best to assist you with your reservation.',
-                            'hb-sharegroop-admin'), $status),
-                    );
-                    break;
-            }
-        }
-
-        if ($response['success']) {
-            $resa_id = $this->hbdb->update_resa_after_payment($_GET['token'], '', '', $resa['amount_to_pay']);
-            if (!$resa_id) {
-                $response = array(
-                    'success' => false,
-                    'error_msg' => 'Error (could not update reservation).'
-                );
-            } else {
-                $this->utils->send_email('new_resa', $resa_id);
-            }
-        }
-
-        return $response;
+            'payment_info' => $orderId,
+            'admin_comment' => $orderId,
+            'paid' => $paid,
+        ];
     }
 
     /**************************************************************
